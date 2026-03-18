@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ONE PIECE — The Grand Line Awaits</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:ital,wght@0,100;0,400;0,600;1,300&display=swap');
+
+:root {
+  --ocean: #0A1F44;
+  --deep: #050e22;
+  --gold: #FFD700;
+  --gold-dim: #c9a800;
+  --crimson: #B22222;
+  --crimson-bright: #e02d2d;
+  --cyan: #00e5ff;
+  --purple: #9b30ff;
+  --glass: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,215,0,0.18);
+  --shadow-gold: 0 0 30px rgba(255,215,0,0.25);
+  --shadow-red: 0 0 30px rgba(178,34,34,0.4);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--deep);
+  color: #e8e0cc;
+  font-family: 'Exo 2', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ──── ANIMATED BACKGROUND ──── */
+.bg-ocean {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 20% 30%, #0d2a6e 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 70%, #1a0a30 0%, transparent 60%),
+              linear-gradient(180deg, #050e22 0%, #0a1f44 50%, #050e22 100%);
+}
+.wave-layer {
+  position: fixed; bottom: 0; left: 0; width: 200%; height: 200px; z-index: 0; pointer-events: none;
+  opacity: 0.12;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='%230078ff' d='M0,60 C360,120 1080,0 1440,60 L1440,120 L0,120 Z'/%3E%3C/svg%3E") repeat-x;
+  animation: waveScroll 8s linear infinite;
+}
+.wave-layer:nth-child(2) { opacity: 0.07; animation-duration: 12s; animation-direction: reverse; bottom: 10px; }
+@keyframes waveScroll { to { transform: translateX(-50%); } }
+
+/* Stars */
+.stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.star {
+  position: absolute; width: 2px; height: 2px; border-radius: 50%;
+  background: white; animation: twinkle 3s infinite;
+}
+@keyframes twinkle { 0%,100%{opacity:0.2;} 50%{opacity:1;} }
+
+/* ──── NAV ──── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 16px 40px; display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(5,14,34,0.95), transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,215,0,0.1);
+}
+.nav-logo {
+  font-family: 'Cinzel Decorative', cursive; font-size: 1.4rem; font-weight: 900;
+  background: linear-gradient(135deg, var(--gold), #fff6a0, var(--gold));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: 0.1em;
+  text-shadow: none;
+  filter: drop-shadow(0 0 8px rgba(255,215,0,0.5));
+}
+.nav-links { display: flex; gap: 32px; }
+.nav-links a {
+  font-family: 'Rajdhani', sans-serif; font-size: 0.85rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.7); text-decoration: none;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+.nav-links a:hover { color: var(--gold); text-shadow: 0 0 12px var(--gold); }
+
+/* ──── HERO ──── */
+#hero {
+  position: relative; z-index: 1; height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 20px;
+  overflow: hidden;
+}
+.hero-bg-art {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(178,34,34,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 50%, rgba(255,215,0,0.06) 0%, transparent 60%);
+}
+.jolly-roger {
+  font-size: clamp(100px, 20vw, 200px); line-height: 1;
+  margin-bottom: 20px; position: relative; z-index: 1;
+  animation: floatSkull 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 40px rgba(255,215,0,0.4));
+}
+@keyframes floatSkull { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-15px);} }
+
+.hero-eyebrow {
+  font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--crimson); margin-bottom: 12px; position: relative; z-index: 1;
+}
+.hero-title {
+  font-family: 'Cinzel Decorative', cursive; font-size: clamp(3rem, 9vw, 8rem);
+  font-weight: 900; line-height: 0.9; position: relative; z-index: 1;
+  background: linear-gradient(135deg, #fff 0%, var(--gold) 40%, #fff6a0 60%, var(--crimson) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 30px rgba(255,215,0,0.4)) drop-shadow(0 4px 20px rgba(0,0,0,0.8));
+  animation: titlePulse 3s ease-in-out infinite;
+}
+@keyframes titlePulse { 0%,100%{filter:drop-shadow(0 0 30px rgba(255,215,0,0.4));} 50%{filter:drop-shadow(0 0 60px rgba(255,215,0,0.7));} }
+.hero-sub {
+  font-family: 'Cinzel', serif; font-size: clamp(0.8rem, 2vw, 1.1rem);
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(255,255,255,0.6); margin-top: 8px; position: relative; z-index: 1;
+}
+.hero-tagline {
+  font-family: 'Exo 2', sans-serif; font-size: clamp(0.9rem, 2vw, 1.2rem);
+  color: rgba(255,215,0,0.8); margin: 24px 0 40px; position: relative; z-index: 1;
+  font-style: italic; font-weight: 300;
+}
+.hero-cta {
+  position: relative; z-index: 1;
+  display: inline-block; padding: 16px 48px;
+  font-family: 'Cinzel', serif; font-weight: 700; font-size: 0.9rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--deep); background: linear-gradient(135deg, var(--gold), #fff6a0, var(--gold));
+  border: none; cursor: pointer;
+  clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 30px rgba(255,215,0,0.4);
+  text-decoration: none;
+}
+.hero-cta:hover { transform: scale(1.05); box-shadow: 0 8px 50px rgba(255,215,0,0.7); }
+
+.scroll-hint {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+  z-index: 1; animation: bounce 2s infinite;
+  font-size: 2rem; opacity: 0.5;
+}
+@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(10px);} }
+
+/* ──── SECTIONS ──── */
+section { position: relative; z-index: 1; padding: 100px 40px; }
+.section-header {
+  text-align: center; margin-bottom: 70px;
+}
+.section-eyebrow {
+  font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.5em; text-transform: uppercase;
+  color: var(--crimson); margin-bottom: 12px;
+}
+.section-title {
+  font-family: 'Cinzel Decorative', cursive; font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 700; color: var(--gold);
+  filter: drop-shadow(0 0 20px rgba(255,215,0,0.3));
+  line-height: 1.2;
+}
+.section-line {
+  width: 80px; height: 3px; margin: 20px auto 0;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* ──── FILTER BAR ──── */
+.filter-bar {
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+  margin-bottom: 50px;
+}
+.filter-btn {
+  padding: 8px 24px;
+  font-family: 'Rajdhani', sans-serif; font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  color: rgba(255,255,255,0.7); cursor: pointer;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: all 0.3s; backdrop-filter: blur(8px);
+}
+.filter-btn:hover, .filter-btn.active {
+  background: rgba(255,215,0,0.15); border-color: var(--gold);
+  color: var(--gold); box-shadow: 0 0 20px rgba(255,215,0,0.2);
+}
+
+/* ──── CHARACTER GRID ──── */
+.char-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px; max-width: 1400px; margin: 0 auto;
+}
+
+.char-card {
+  position: relative; overflow: hidden;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  clip-path: polygon(16px 0%, 100% 0%, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0% 100%, 0% 16px);
+  transition: transform 0.4s, box-shadow 0.4s;
+  cursor: pointer;
+}
+.char-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-gold), 0 20px 60px rgba(0,0,0,0.5);
+  border-color: var(--gold);
+}
+.char-card.villain { border-color: rgba(178,34,34,0.3); }
+.char-card.villain:hover { box-shadow: var(--shadow-red), 0 20px 60px rgba(0,0,0,0.5); border-color: var(--crimson); }
+
+/* Emoji portrait area */
+.char-portrait {
+  height: 200px; display: flex; align-items: center; justify-content: center;
+  font-size: 80px; position: relative; overflow: hidden;
+}
+.char-card.villain .char-portrait { background: linear-gradient(135deg, #1a0505, #2d0a0a); }
+.char-portrait-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(10,31,68,0.8), rgba(5,14,34,0.4));
+}
+.char-portrait-glow {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255,215,0,0.15) 0%, transparent 70%);
+  opacity: 0; transition: opacity 0.4s;
+}
+.char-card:hover .char-portrait-glow { opacity: 1; }
+.char-avatar {
+  position: relative; z-index: 1; line-height: 1;
+  filter: drop-shadow(0 0 20px rgba(255,215,0,0.4));
+  animation: avatarFloat 3s ease-in-out infinite;
+}
+.char-card:nth-child(even) .char-avatar { animation-delay: -1.5s; }
+@keyframes avatarFloat { 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-5px) rotate(2deg);} }
+
+.char-aura {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+  background: linear-gradient(to top, rgba(255,215,0,0.2), transparent);
+  opacity: 0; transition: opacity 0.4s;
+}
+.char-card:hover .char-aura { opacity: 1; }
+
+.char-body { padding: 20px; }
+.char-role {
+  font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--crimson); margin-bottom: 4px;
+}
+.char-name {
+  font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 700;
+  color: white; margin-bottom: 12px;
+  text-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+.char-divider {
+  height: 1px; background: linear-gradient(90deg, var(--gold), transparent);
+  margin-bottom: 12px; opacity: 0.4;
+}
+.char-powers { margin-bottom: 12px; }
+.power-label {
+  font-family: 'Rajdhani', sans-serif; font-size: 0.65rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold-dim); margin-bottom: 6px;
+}
+.power-tag {
+  display: inline-block; padding: 3px 10px; margin: 3px 3px 3px 0;
+  font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; font-weight: 600;
+  background: rgba(255,215,0,0.1); border: 1px solid rgba(255,215,0,0.25);
+  color: var(--gold); border-radius: 2px;
+}
+.power-tag.red { background: rgba(178,34,34,0.1); border-color: rgba(178,34,34,0.3); color: #ff6b6b; }
+.power-tag.cyan { background: rgba(0,229,255,0.1); border-color: rgba(0,229,255,0.25); color: var(--cyan); }
+.char-skills {
+  font-family: 'Exo 2', sans-serif; font-size: 0.8rem;
+  color: rgba(255,255,255,0.55); line-height: 1.6;
+}
+
+/* ──── POWER SYSTEM ──── */
+#powers { background: radial-gradient(ellipse at 50% 0%, rgba(155,48,255,0.08) 0%, transparent 60%); }
+.power-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px; max-width: 1200px; margin: 0 auto;
+}
+.power-card {
+  padding: 36px 30px;
+  background: var(--glass); border: 1px solid rgba(155,48,255,0.2);
+  backdrop-filter: blur(12px);
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.power-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 40px rgba(155,48,255,0.25), 0 20px 60px rgba(0,0,0,0.4);
+  border-color: var(--purple);
+}
+.power-icon { font-size: 3rem; margin-bottom: 16px; display: block; }
+.power-card-title {
+  font-family: 'Cinzel', serif; font-size: 1.3rem; font-weight: 700;
+  color: var(--gold); margin-bottom: 12px;
+}
+.power-card-sub {
+  font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--purple); margin-bottom: 16px;
+}
+.power-types { display: flex; flex-direction: column; gap: 10px; }
+.power-type-item {
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.3); border-left: 3px solid var(--purple);
+}
+.power-type-name {
+  font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 600;
+  color: white; margin-bottom: 4px;
+}
+.power-type-desc {
+  font-size: 0.75rem; color: rgba(255,255,255,0.5); line-height: 1.4;
+}
+.power-type-item.gold { border-color: var(--gold); }
+.power-type-item.crimson { border-color: var(--crimson); }
+.power-type-item.cyan { border-color: var(--cyan); }
+
+/* ──── HAKI BARS ──── */
+.haki-bar-wrap { margin-top: 10px; }
+.haki-bar-label {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; font-weight: 600;
+  color: rgba(255,255,255,0.6); margin-bottom: 6px;
+}
+.haki-bar {
+  height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden;
+}
+.haki-fill {
+  height: 100%; border-radius: 3px;
+  background: linear-gradient(90deg, var(--gold), #fff6a0);
+  animation: fillBar 1.5s ease-out forwards;
+  width: 0%;
+}
+@keyframes fillBar { to { width: var(--w); } }
+
+/* ──── PARALLAX DIVIDER ──── */
+.parallax-divider {
+  position: relative; height: 200px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.parallax-text {
+  font-family: 'Cinzel Decorative', cursive; font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900; letter-spacing: 0.3em;
+  color: rgba(255,215,0,0.05); white-space: nowrap;
+  position: absolute; width: 200%; animation: marquee 20s linear infinite;
+}
+@keyframes marquee { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+.parallax-divider-line {
+  position: relative; z-index: 1; width: 100%; text-align: center;
+  font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.5em;
+  text-transform: uppercase; color: rgba(255,215,0,0.5);
+  display: flex; align-items: center; gap: 20px; padding: 0 40px;
+}
+.parallax-divider-line::before, .parallax-divider-line::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+}
+
+/* ──── SIDE CHARACTERS ──── */
+.side-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; max-width: 1200px; margin: 0 auto;
+}
+.side-card {
+  padding: 24px 20px; text-align: center;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  clip-path: polygon(0 10px, 10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.side-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-gold);
+  border-color: var(--gold);
+}
+.side-icon { font-size: 3.5rem; margin-bottom: 12px; display: block; }
+.side-name {
+  font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 700;
+  color: white; margin-bottom: 6px;
+}
+.side-title {
+  font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim);
+  margin-bottom: 10px;
+}
+.side-desc { font-size: 0.75rem; color: rgba(255,255,255,0.45); line-height: 1.5; }
+
+/* ──── COMPARISON CHART ──── */
+#comparison { background: radial-gradient(ellipse at 50% 100%, rgba(178,34,34,0.06) 0%, transparent 60%); }
+.compare-wrap { max-width: 900px; margin: 0 auto; }
+.compare-row {
+  display: grid; grid-template-columns: 180px 1fr 60px;
+  gap: 16px; align-items: center; margin-bottom: 20px;
+  padding: 14px 20px;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  backdrop-filter: blur(8px);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+.compare-name {
+  font-family: 'Cinzel', serif; font-size: 0.9rem; font-weight: 600;
+  color: white; display: flex; align-items: center; gap: 10px;
+}
+.compare-bars { display: flex; flex-direction: column; gap: 6px; }
+.compare-bar-row { display: flex; align-items: center; gap: 8px; }
+.compare-bar-label {
+  font-family: 'Rajdhani', sans-serif; font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); width: 60px; flex-shrink: 0;
+}
+.compare-bar-track {
+  flex: 1; height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden;
+}
+.compare-bar-fill {
+  height: 100%; border-radius: 3px;
+  animation: fillBar 2s ease-out forwards; width: 0%;
+}
+.bar-str { background: linear-gradient(90deg, #ff6b35, #ffaa00); }
+.bar-spd { background: linear-gradient(90deg, #00e5ff, #0080ff); }
+.bar-hki { background: linear-gradient(90deg, #9b30ff, #ff30a0); }
+.compare-rank {
+  font-family: 'Cinzel Decorative', cursive; font-size: 1.2rem; font-weight: 900;
+  color: var(--gold); text-align: center;
+}
+
+/* ──── FOOTER ──── */
+footer {
+  position: relative; z-index: 1; padding: 60px 40px 40px;
+  text-align: center;
+  border-top: 1px solid rgba(255,215,0,0.1);
+}
+.footer-logo {
+  font-family: 'Cinzel Decorative', cursive; font-size: 2rem; font-weight: 900;
+  background: linear-gradient(135deg, var(--gold), #fff6a0);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+}
+.footer-quote {
+  font-family: 'Cinzel', serif; font-size: 1rem; font-style: italic;
+  color: rgba(255,255,255,0.4); max-width: 500px; margin: 0 auto 30px;
+  line-height: 1.6;
+}
+.footer-copy {
+  font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.2);
+}
+
+/* ──── SCROLL ANIMATIONS ──── */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ──── RESPONSIVE ──── */
+@media(max-width:768px) {
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  section { padding: 70px 20px; }
+  .char-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .compare-row { grid-template-columns: 120px 1fr 40px; }
+}
+@media(max-width:480px) {
+  .char-grid { grid-template-columns: 1fr; }
+}
+
+/* ──── CUSTOM SCROLLBAR ──── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--deep); }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--gold), var(--crimson)); border-radius: 3px; }
+
+/* ──── SECTION SPECIFIC BG ──── */
+#villains { background: linear-gradient(180deg, transparent, rgba(80,0,0,0.08), transparent); }
+</style>
+</head>
+<body>
+
+<!-- Background Layers -->
+<div class="bg-ocean"></div>
+<div class="wave-layer"></div>
+<div class="wave-layer"></div>
+<div class="stars" id="starsContainer"></div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-logo">☠ ONE PIECE</div>
+  <div class="nav-links">
+    <a href="#crew">Straw Hats</a>
+    <a href="#powers">Powers</a>
+    <a href="#villains">Villains</a>
+    <a href="#side">Legends</a>
+    <a href="#comparison">Rankings</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-art"></div>
+  <div class="jolly-roger">☠</div>
+  <div class="hero-eyebrow">Eiichiro Oda's Epic Saga</div>
+  <h1 class="hero-title">ONE PIECE</h1>
+  <p class="hero-sub">The Greatest Treasure of All Time</p>
+  <p class="hero-tagline">"I'm going to be King of the Pirates!" — Monkey D. Luffy</p>
+  <a href="#crew" class="hero-cta">Set Sail ⚓</a>
+  <div class="scroll-hint">↓</div>
+</section>
+
+<!-- STRAW HAT CREW -->
+<section id="crew">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">The Straw Hat Pirates</div>
+    <h2 class="section-title">Mugiwara no Ichimi</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="filter-bar reveal">
+    <button class="filter-btn active" onclick="filterCards('all',this)">All Crew</button>
+    <button class="filter-btn" onclick="filterCards('fighter',this)">Fighters</button>
+    <button class="filter-btn" onclick="filterCards('devilfruit',this)">Devil Fruit</button>
+    <button class="filter-btn" onclick="filterCards('haki',this)">Haki Users</button>
+    <button class="filter-btn" onclick="filterCards('support',this)">Support</button>
+  </div>
+
+  <div class="char-grid" id="crewGrid">
+
+    <!-- Luffy -->
+    <div class="char-card reveal" data-tags="fighter devilfruit haki">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#1a0a05,#2d1a05)">
+        <div class="char-portrait-bg"></div>
+        <div class="char-portrait-glow"></div>
+        <div class="char-avatar" style="font-size:85px">🫧</div>
+        <div class="char-aura" style="background:linear-gradient(to top,rgba(255,150,0,0.3),transparent)"></div>
+      </div>
+      <div class="char-body">
+        <div class="char-role">⚓ Captain · Founder</div>
+        <div class="char-name">Monkey D. Luffy</div>
+        <div class="char-divider"></div>
+        <div class="char-powers">
+          <div class="power-label">Devil Fruit & Haki</div>
+          <span class="power-tag">Nika / Gum-Gum Fruit</span>
+          <span class="power-tag red">Gear 5 — Sun God</span>
+          <span class="power-tag cyan">All 3 Haki Types</span>
+        </div>
+        <div class="char-skills">⚡ Gear 2 · Gear 3 · Gear 4 · Gear 5 transformations. Rubber body grants immunity to blunt force, lightning, and extreme stretching. Conqueror's Haki coating. Extreme endurance and joy-driven power multiplier.</div>
+      </div>
+    </div>
+
+    <!-- Zoro -->
+    <div class="char-card reveal reveal-delay-1" data-tags="fighter haki">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#0a1a05,#1a2d0a)">
+        <div class="char-portrait-bg"></div>
+        <div class="char-portrait-glow" style="background:radial-gradient(ellipse at center,rgba(50,200,50,0.15) 0%,transparent 70%)"></div>
+        <div class="char-avatar" style="font-size:85px">⚔️</div>
+        <div class="char-aura" style="background:linear-gradient(to top,rgba(50,200,50,0.25),transparent)"></div>
+      </div>
+      <div class="char-body">
+        <div class="char-role">🗡️ First Mate · Swordsman</div>
+        <div class="char-name">Roronoa Zoro</div>
+        <div class="char-divider"></div>
+        <div class="char-powers">
+          <div class="power-label">Combat Style & Haki</div>
+          <span class="power-tag">Three Sword Style</span>
+          <span class="power-tag cyan">Advanced Armament</span>
+          <span class="power-tag red">Conqueror's Haki</span>
+        </div>
+        <div class="char-skills">🔥 Oni Giri · 1080 Pound Phoenix · Asura · King of Hell Three-Sword Style. Carries nothing to drink except swords and sake. Cuts nothing he doesn't wish to, including nothing he wishes to cut.</div>
+      </div>
+    </div>
+
+    <!-- Nami -->
+    <div class="char-card reveal reveal-delay-2" data-tags="support">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#0a150a,#1a2500)">
+        <div class="char-portrait-bg"></div>
+        <div class="char-portrait-glow" style="background:radial-gradient(ellipse at center,rgba(255,165,0,0.12) 0%,transparent 70%)"></div>
+        <div class="char-avatar" style="font-size:85px">🧭</div>
+        <div class="char-aura" style="background:linear-gradient(to top,rgba(255,165,0,0.2),transparent)"></div>
+      </div>
+      <div class="char-body">
+        <div class="char-role">🗺️ Navigator</div>
+        <div class="char-name">Nami</div>
+        <div class="char-divider"></div>
+        <div class="char-powers">
+          <div class="power-label">Skills & Weapons</div>
+          <span class="power-tag">Climatact</span>
+          <span class="power-tag cyan">Weather Control</span>
+          <span class="power-tag">Zeus (Cloud)</span>
+        </div>
+        <div class="char-skills">⚡ Thunderbolt Tempo · Cyclone Tempo · Rain Tempo. Genius navigator capable of predicting weather to pinpoint accuracy. Commands the thundercloud Zeus as a living weapon.</div>
+      </div>
+    </div>
+
+    <!-- Usopp -->
+    <div class="char-card reveal reveal-delay-3" data-tags="fighter haki support">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#1a1005,#2d2010)">
+        <div class="char-portrait-bg"></div>
+        <div class="char-portrait-glow" style="background:radial-gradient(ellipse at center,rgba(139,90,43,0.15) 0%,transparent 70%)"></div>
+        <div class="char-avatar" style="font-size:85px">🎯</div>
+      </div>
+      <div class="char-body">
+        <div class="char-role">🎯 Sniper</div>
+        <div class="char-name">Usopp</div>
+        <div class="char-divider"></div>
+        <div class="char-powers">
+          <div class="power-label">Skills & Haki</div>
+          <span class="power-tag">Kabuto / Kuro Kabuto</span>
+          <span class="power-tag cyan">Observation Haki</span>
+          <span class="power-tag">Pop Greens</span>
+        </div>
+        <div class="char-skills">🔭 Long-range precision shooting. God Usopp awakened Observation Haki instinctively. Diverse ammunition including fire, flash, and impact dials. Creator of clever battlefield weapons.</div>
+      </div>
+    </div>
+
+    <!-- Sanji -->
+    <div class="char-card reveal" data-tags="fighter haki">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#1a0505,#2d1510)">
+        <div class="char-portrait-bg"></div>
+        <div class="char-portrait-glow" style="background:radial-gradient(ellipse at center,rgba(255,80,0,0.2) 0%,transparent 70%)"></div>
+        <div class="char-avatar" style="font-size:85px">🦵</div>
+        <div class="char-aura" style="background:linear-gradient(to top,rgba(255,60,0,0.3),transparent)"></div>
+      </div>
+      <div class="char-body">
+        <div class="char-role">🍽️ Chef · Fighter</div>
+        <div class="char-name">Sanji</div>
+        <div class="char-divider"></div>
+        <div class="char-powers">
+          <div class="power-label">Combat Style & Haki</div>
+          <span class="power-tag red">Black Leg Style</span>
+          <span class="power-tag red">Ifrit Jambe (Flames)</span>
+          <span class="power-tag cyan">Germa Enhancements</span>
+        </div>
+        <div class="char-skills">🔥 Diable Jambe · Sky Walk · Ifrit Jambe (black flames). Extreme speed and aerial mastery. Genetic Germa modifications grant regeneration and invisibility. Never uses hands in combat (they cook).</div>
+      </div>
+    </div>
+
+    <!-- Chopper -->
+    <div class="char-card reveal reveal-delay-1" data-tags="fighter devilfruit support">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#050f1a,#0a1a2d)">
+        <div class="char-portrait-bg"></div>
+        <div class="char-portrait-glow" style="background:radial-gradient(ellipse at center,rgba(100,200,255,0.12) 0%,transparent 70%)"></div>
+        <div class="char-avatar" style="font-size:85px">🦌</div>
+      </div>
+      <div class="char-body">
+        <div class="char-role">⚕️ Doctor</div>
+        <div class="char-name">Tony Tony Chopper</div>
+        <div class="char-divider"></div>
+        <div class="char-powers">
+          <div class="power-label">Devil Fruit</div>
+          <span class="power-tag">Human-Human Fruit</span>
+          <span class="power-tag cyan">7 Rumble Balls</span>
+          <span class="power-tag">Monster Point</span>
+        </div>
+        <div class="char-skills">❤️ Multiple transformation forms via Rumble Balls. Monster Point grants enormous power. Brilliant doctor and scientist. Capable of curing diseases deemed incurable.</div>
+      </div>
+    </div>
+
+    <!-- Robin -->
+    <div class="char-card reveal reveal-delay-2" data-tags="fighter devilfruit">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#1a0520,#2d0a35)">
+        <div class="char-portrait-bg"></div>
+        <div class="char-portrait-glow" style="background:radial-gradient(ellipse at center,rgba(155,48,255,0.2) 0%,transparent 70%)"></div>
+        <div class="char-avatar" style="font-size:85px">🌸</div>
+        <div class="char-aura" style="background:linear-gradient(to top,rgba(155,48,255,0.2),transparent)"></div>
+      </div>
+      <div class="char-body">
+        <div class="char-role">📜 Archaeologist</div>
+        <div class="char-name">Nico Robin</div>
+        <div class="char-divider"></div>
+        <div class="char-powers">
+          <div class="power-label">Devil Fruit</div>
+          <span class="power-tag" style="border-color:rgba(155,48,255,0.4);color:#c084fc;background:rgba(155,48,255,0.1)">Flower-Flower Fruit</span>
+          <span class="power-tag">Gigante Mano</span>
+          <span class="power-tag cyan">Poneglyph Reader</span>
+        </div>
+        <div class="char-skills">🌺 Sprouts copies of her body parts anywhere. Gigantesco Mano forms giant limbs. Sole person in world who can read Poneglyphs — key to finding One Piece.</div>
+      </div>
+    </div>
+
+    <!-- Franky -->
+    <div class="char-card reveal reveal-delay-3" data-tags="fighter">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#001a1a,#002d2d)">
+        <div class="char-portrait-bg"></div>
+        <div class="char-portrait-glow" style="background:radial-gradient(ellipse at center,rgba(0,229,255,0.15) 0%,transparent 70%)"></div>
+        <div class="char-avatar" style="font-size:85px">⚙️</div>
+      </div>
+      <div class="char-body">
+        <div class="char-role">🔧 Shipwright · Cyborg</div>
+        <div class="char-name">Franky</div>
+        <div class="char-divider"></div>
+        <div class="char-powers">
+          <div class="power-label">Cyborg Arsenal</div>
+          <span class="power-tag cyan">Radical Beam</span>
+          <span class="power-tag">BF-37 Body</span>
+          <span class="power-tag">General Franky</span>
+        </div>
+        <div class="char-skills">🤖 Self-modified cyborg body runs on cola. Built the Thousand Sunny. Armed with laser cannons, rocket launchers, and a giant mech suit. Armament Haki coated armor.</div>
+      </div>
+    </div>
+
+    <!-- Brook -->
+    <div class="char-card reveal" data-tags="fighter devilfruit">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#050505,#0f0f1a)">
+        <div class="char-portrait-bg"></div>
+        <div class="char-portrait-glow" style="background:radial-gradient(ellipse at center,rgba(200,200,255,0.12) 0%,transparent 70%)"></div>
+        <div class="char-avatar" style="font-size:85px">🎻</div>
+        <div class="char-aura" style="background:linear-gradient(to top,rgba(200,200,255,0.15),transparent)"></div>
+      </div>
+      <div class="char-body">
+        <div class="char-role">🎵 Musician · Swordsman</div>
+        <div class="char-name">Brook</div>
+        <div class="char-divider"></div>
+        <div class="char-powers">
+          <div class="power-label">Devil Fruit & Skills</div>
+          <span class="power-tag">Revive-Revive Fruit</span>
+          <span class="power-tag cyan">Soul Solid (Ice)</span>
+          <span class="power-tag">Soul King</span>
+        </div>
+        <div class="char-skills">💀 Survived death. Can chill his sword with his own soul energy to freeze enemies. Astral projection allows soul to leave body. Yomi Yomi no Mi grants second life and soul manipulation. Yohohoho!</div>
+      </div>
+    </div>
+
+    <!-- Jinbe -->
+    <div class="char-card reveal reveal-delay-1" data-tags="fighter haki">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#001a2d,#002d4a)">
+        <div class="char-portrait-bg"></div>
+        <div class="char-portrait-glow" style="background:radial-gradient(ellipse at center,rgba(0,150,255,0.18) 0%,transparent 70%)"></div>
+        <div class="char-avatar" style="font-size:85px">🌊</div>
+        <div class="char-aura" style="background:linear-gradient(to top,rgba(0,150,255,0.25),transparent)"></div>
+      </div>
+      <div class="char-body">
+        <div class="char-role">⚓ Helmsman · Knight</div>
+        <div class="char-name">Jinbe</div>
+        <div class="char-divider"></div>
+        <div class="char-powers">
+          <div class="power-label">Combat Style & Haki</div>
+          <span class="power-tag cyan">Fish-Man Karate</span>
+          <span class="power-tag cyan">Water Manipulation</span>
+          <span class="power-tag">Advanced Armament</span>
+        </div>
+        <div class="char-skills">🌊 Controls water in combat — can fight enemies even without touching them. Ten times the strength of humans. Former Warlord of the Sea. Unwavering moral code and resolve.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PARALLAX DIVIDER -->
+<div class="parallax-divider">
+  <div class="parallax-text">DEVIL FRUIT · HAKI · ROKUSHIKI · DEVIL FRUIT · HAKI · ROKUSHIKI · </div>
+  <div class="parallax-divider-line">Power Systems of the Grand Line</div>
+</div>
+
+<!-- POWER SYSTEMS -->
+<section id="powers">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Combat & Supernatural</div>
+    <h2 class="section-title">Power Systems</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="power-grid">
+
+    <div class="power-card reveal">
+      <span class="power-icon">🍎</span>
+      <div class="power-card-sub">Akuma no Mi</div>
+      <div class="power-card-title">Devil Fruits</div>
+      <div class="power-types">
+        <div class="power-type-item gold">
+          <div class="power-type-name">Paramecia</div>
+          <div class="power-type-desc">Body-altering superhuman abilities. Most common type. Examples: Gum-Gum, String-String, Flower-Flower.</div>
+        </div>
+        <div class="power-type-item cyan">
+          <div class="power-type-name">Zoan</div>
+          <div class="power-type-desc">Animal transformations granting their traits. Mythical Zoans are rarest and most powerful.</div>
+        </div>
+        <div class="power-type-item crimson">
+          <div class="power-type-name">Logia</div>
+          <div class="power-type-desc">Become, generate, and control a natural element. User is near-untouchable without Haki.</div>
+        </div>
+      </div>
+      <div style="margin-top:16px;padding:10px 14px;background:rgba(178,34,34,0.1);border-left:3px solid var(--crimson);border-radius:2px">
+        <div class="power-type-name" style="color:#ff6b6b;font-size:0.75rem">⚠️ Weakness</div>
+        <div class="power-type-desc">All Devil Fruit users lose the ability to swim. Sea water drains their power. Seastone negates abilities.</div>
+      </div>
+    </div>
+
+    <div class="power-card reveal reveal-delay-1">
+      <span class="power-icon">👁️</span>
+      <div class="power-card-sub">Busoshoku · Kenbunshoku · Haoshoku</div>
+      <div class="power-card-title">Haki</div>
+      <div class="power-types">
+        <div class="power-type-item cyan">
+          <div class="power-type-name">Observation Haki (Kenbunshoku)</div>
+          <div class="power-type-desc">Sense presence, emotions, and predict movements. Advanced users see the future.</div>
+        </div>
+        <div class="power-type-item gold">
+          <div class="power-type-name">Armament Haki (Busoshoku)</div>
+          <div class="power-type-desc">Harden the body or weapons. Only way to bypass Logia defenses. Advanced form flows through targets.</div>
+        </div>
+        <div class="power-type-item crimson">
+          <div class="power-type-name">Conqueror's Haki (Haoshoku)</div>
+          <div class="power-type-desc">Rare willpower that subdues weak-willed enemies. Advanced coating multiplies physical power tenfold.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="power-card reveal reveal-delay-2">
+      <span class="power-icon">🥋</span>
+      <div class="power-card-sub">Advanced Combat</div>
+      <div class="power-card-title">Fighting Arts</div>
+      <div class="power-types">
+        <div class="power-type-item gold">
+          <div class="power-type-name">Rokushiki (Six Powers)</div>
+          <div class="power-type-desc">CP9 martial arts: Geppo (sky-walk), Soru (speed), Tekkai (iron body), Rankyaku (wind blades), Shigan (finger pistol), Kami-e (paper dodge).</div>
+        </div>
+        <div class="power-type-item cyan">
+          <div class="power-type-name">Fish-Man Karate</div>
+          <div class="power-type-desc">Martial art using water molecules in the air. Works at range. Devastating against large enemies.</div>
+        </div>
+        <div class="power-type-item crimson">
+          <div class="power-type-name">Ryusoken / Electro / Black Leg</div>
+          <div class="power-type-desc">Dragon Claw, Mink electricity manipulation, and Sanji's flame-kick style. Each unique to bloodline or training.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PARALLAX DIVIDER -->
+<div class="parallax-divider" style="background:linear-gradient(180deg,transparent,rgba(80,0,0,0.05),transparent)">
+  <div class="parallax-text" style="color:rgba(178,34,34,0.08)">KAIDO · BIG MOM · BLACKBEARD · DOFLAMINGO · KAIDO · BIG MOM · BLACKBEARD · </div>
+  <div class="parallax-divider-line" style="color:rgba(178,34,34,0.5)">The Enemies of the Free Seas</div>
+</div>
+
+<!-- VILLAINS -->
+<section id="villains">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">The World's Greatest Threats</div>
+    <h2 class="section-title" style="color:var(--crimson)">Villains & Emperors</h2>
+    <div class="section-line" style="background:linear-gradient(90deg,transparent,var(--crimson),transparent)"></div>
+  </div>
+
+  <div class="char-grid" id="villainGrid">
+
+    <div class="char-card villain reveal">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#1a0505,#0d0010)">
+        <div class="char-portrait-bg" style="background:linear-gradient(135deg,rgba(80,0,0,0.6),rgba(50,0,80,0.3))"></div>
+        <div class="char-portrait-glow" style="background:radial-gradient(ellipse at center,rgba(200,0,0,0.2) 0%,transparent 70%)"></div>
+        <div class="char-avatar" style="font-size:85px">🐉</div>
+        <div class="char-aura" style="background:linear-gradient(to top,rgba(200,0,0,0.3),transparent);opacity:1"></div>
+      </div>
+      <div class="char-body">
+        <div class="char-role" style="color:#ff4444">👑 Yonko — King of Beasts</div>
+        <div class="char-name">Kaido</div>
+        <div class="char-divider" style="background:linear-gradient(90deg,var(--crimson),transparent)"></div>
+        <div class="char-powers">
+          <div class="power-label">Powers</div>
+          <span class="power-tag red">Mythical Dragon Zoan</span>
+          <span class="power-tag red">All 3 Haki Types</span>
+          <span class="power-tag red">Tama no Mi</span>
+        </div>
+        <div class="char-skills">🔥 Transforms into a massive Eastern Dragon. Bajrang Gun — mountain-splitting Haki fist. Once called "the world's strongest creature." Nearly impossible to kill — survived all execution attempts.</div>
+      </div>
+    </div>
+
+    <div class="char-card villain reveal reveal-delay-1">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#1a0510,#2d0510)">
+        <div class="char-portrait-bg" style="background:linear-gradient(135deg,rgba(80,0,30,0.6),rgba(50,0,0,0.3))"></div>
+        <div class="char-portrait-glow" style="background:radial-gradient(ellipse at center,rgba(255,0,100,0.2) 0%,transparent 70%)"></div>
+        <div class="char-avatar" style="font-size:85px">👑</div>
+        <div class="char-aura" style="background:linear-gradient(to top,rgba(255,0,100,0.2),transparent);opacity:1"></div>
+      </div>
+      <div class="char-body">
+        <div class="char-role" style="color:#ff4444">👑 Yonko — Charlotte Linlin</div>
+        <div class="char-name">Big Mom</div>
+        <div class="char-divider" style="background:linear-gradient(90deg,var(--crimson),transparent)"></div>
+        <div class="char-powers">
+          <div class="power-label">Powers</div>
+          <span class="power-tag red">Soul-Soul Fruit</span>
+          <span class="power-tag red">Zeus · Prometheus · Napoleon</span>
+          <span class="power-tag red">Advanced Armament</span>
+        </div>
+        <div class="char-skills">⚡ Steals the lifespan of others. Commands three homies: Zeus (thunder), Prometheus (sun), Napoleon (sword hat). Tanked cannon fire since childhood without injury. Motherly madness at world-ending scale.</div>
+      </div>
+    </div>
+
+    <div class="char-card villain reveal reveal-delay-2">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#050a20,#0a1035)">
+        <div class="char-portrait-bg" style="background:linear-gradient(135deg,rgba(0,0,80,0.5),rgba(50,0,80,0.3))"></div>
+        <div class="char-portrait-glow" style="background:radial-gradient(ellipse at center,rgba(100,0,255,0.2) 0%,transparent 70%)"></div>
+        <div class="char-avatar" style="font-size:85px">🕸️</div>
+      </div>
+      <div class="char-body">
+        <div class="char-role" style="color:#ff4444">💠 Former Warlord — Heavenly Demon</div>
+        <div class="char-name">Doflamingo</div>
+        <div class="char-divider" style="background:linear-gradient(90deg,var(--crimson),transparent)"></div>
+        <div class="char-powers">
+          <div class="power-label">Powers</div>
+          <span class="power-tag red">Ito Ito no Mi (Strings)</span>
+          <span class="power-tag red">Awakening</span>
+          <span class="power-tag red">Conqueror's Haki</span>
+        </div>
+        <div class="char-skills">🕸️ Manipulates strings strong enough to cut through steel. Birdcage — a giant dome of strings that slowly shrinks. Can control people like puppets. Awakening turns surroundings into strings.</div>
+      </div>
+    </div>
+
+    <div class="char-card villain reveal reveal-delay-3">
+      <div class="char-portrait" style="background:linear-gradient(135deg,#000005,#050010)">
+        <div class="char-portrait-bg" style="background:linear-gradient(135deg,rgba(0,0,0,0.8),rgba(10,0,30,0.5))"></div>
+        <div class="char-portrait-glow" style="background:radial-gradient(ellipse at center,rgba(80,0,120,0.2) 0%,transparent 70%)"></div>
+        <div class="char-avatar" style="font-size:85px">🌑</div>
+        <div class="char-aura" style="background:linear-gradient(to top,rgba(80,0,120,0.2),transparent);opacity:1"></div>
+      </div>
+      <div class="char-body">
+        <div class="char-role" style="color:#ff4444">☠️ Yonko — Teach</div>
+        <div class="char-name">Blackbeard</div>
+        <div class="char-divider" style="background:linear-gradient(90deg,var(--crimson),transparent)"></div>
+        <div class="char-powers">
+          <div class="power-label">Powers</div>
+          <span class="power-tag red">Yami Yami no Mi (Darkness)</span>
+          <span class="power-tag red">Gura Gura no Mi (Quake)</span>
+          <span class="power-tag red">Two Devil Fruits</span>
+        </div>
+        <div class="char-skills">🌑 Only person to wield two Devil Fruits simultaneously. Darkness nullifies other Devil Fruit powers on contact. Quake-Quake Fruit can shatter the world. Considered the most dangerous pirate of the modern era.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- LEGENDS -->
+<section id="side">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Yonko · Shichibukai · Legends</div>
+    <h2 class="section-title">Notable Figures</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="side-grid">
+    <div class="side-card reveal">
+      <span class="side-icon">⚓</span>
+      <div class="side-name">Shanks</div>
+      <div class="side-title">Red-Hair · Yonko</div>
+      <div class="side-desc">Luffy's inspiration. Master of Conqueror's Haki. Stopped a war with his mere presence. No Devil Fruit — pure Haki mastery.</div>
+    </div>
+    <div class="side-card reveal reveal-delay-1">
+      <span class="side-icon">🗡️</span>
+      <div class="side-name">Mihawk</div>
+      <div class="side-title">Greatest Swordsman Alive</div>
+      <div class="side-desc">Wields the black blade Yoru. Cut entire ships in half. Zoro's ultimate goal. Eyes sharper than any hawk.</div>
+    </div>
+    <div class="side-card reveal reveal-delay-2">
+      <span class="side-icon">🔥</span>
+      <div class="side-name">Portgas D. Ace</div>
+      <div class="side-title">Fire Fist · Whitebeard Pirates</div>
+      <div class="side-desc">Mera Mera no Mi (fire). Luffy's adoptive brother. Conqueror's Haki. Died protecting Luffy at Marineford.</div>
+    </div>
+    <div class="side-card reveal reveal-delay-3">
+      <span class="side-icon">💥</span>
+      <div class="side-name">Whitebeard</div>
+      <div class="side-title">Strongest Man · Edward Newgate</div>
+      <div class="side-desc">Gura Gura no Mi — can shatter the world. Never lost a man. Died standing — zero wounds on his back.</div>
+    </div>
+    <div class="side-card reveal">
+      <span class="side-icon">💛</span>
+      <div class="side-name">Trafalgar Law</div>
+      <div class="side-title">Surgeon of Death · Warlord</div>
+      <div class="side-desc">Ope Ope no Mi — creates a surgical "Room" with full control. Can perform "Personality Transplant" and grant immortality at cost of his life.</div>
+    </div>
+    <div class="side-card reveal reveal-delay-1">
+      <span class="side-icon">⚡</span>
+      <div class="side-name">Eustass Kid</div>
+      <div class="side-title">Captain of Kid Pirates</div>
+      <div class="side-desc">Jiki Jiki no Mi — magnet manipulation. Attracts and repels metal. Awakening allows repelling souls. Relentless ambition.</div>
+    </div>
+  </div>
+</section>
+
+<!-- POWER COMPARISON -->
+<section id="comparison">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Animated Ranking Chart</div>
+    <h2 class="section-title">Power Comparison</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="compare-wrap">
+    <div class="compare-row reveal">
+      <div class="compare-name">🫧 Luffy</div>
+      <div class="compare-bars">
+        <div class="compare-bar-row"><div class="compare-bar-label">Strength</div><div class="compare-bar-track"><div class="compare-bar-fill bar-str" style="--w:98%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Speed</div><div class="compare-bar-track"><div class="compare-bar-fill bar-spd" style="--w:95%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Haki</div><div class="compare-bar-track"><div class="compare-bar-fill bar-hki" style="--w:100%"></div></div></div>
+      </div>
+      <div class="compare-rank">S+</div>
+    </div>
+    <div class="compare-row reveal reveal-delay-1">
+      <div class="compare-name">⚔️ Zoro</div>
+      <div class="compare-bars">
+        <div class="compare-bar-row"><div class="compare-bar-label">Strength</div><div class="compare-bar-track"><div class="compare-bar-fill bar-str" style="--w:95%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Speed</div><div class="compare-bar-track"><div class="compare-bar-fill bar-spd" style="--w:87%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Haki</div><div class="compare-bar-track"><div class="compare-bar-fill bar-hki" style="--w:92%"></div></div></div>
+      </div>
+      <div class="compare-rank">S</div>
+    </div>
+    <div class="compare-row reveal reveal-delay-2">
+      <div class="compare-name">🦵 Sanji</div>
+      <div class="compare-bars">
+        <div class="compare-bar-row"><div class="compare-bar-label">Strength</div><div class="compare-bar-track"><div class="compare-bar-fill bar-str" style="--w:92%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Speed</div><div class="compare-bar-track"><div class="compare-bar-fill bar-spd" style="--w:97%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Haki</div><div class="compare-bar-track"><div class="compare-bar-fill bar-hki" style="--w:88%"></div></div></div>
+      </div>
+      <div class="compare-rank">S</div>
+    </div>
+    <div class="compare-row reveal reveal-delay-3">
+      <div class="compare-name">🐉 Kaido</div>
+      <div class="compare-bars">
+        <div class="compare-bar-row"><div class="compare-bar-label">Strength</div><div class="compare-bar-track"><div class="compare-bar-fill bar-str" style="--w:100%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Speed</div><div class="compare-bar-track"><div class="compare-bar-fill bar-spd" style="--w:85%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Haki</div><div class="compare-bar-track"><div class="compare-bar-fill bar-hki" style="--w:98%"></div></div></div>
+      </div>
+      <div class="compare-rank" style="color:var(--crimson)">S+</div>
+    </div>
+    <div class="compare-row reveal">
+      <div class="compare-name">⚓ Shanks</div>
+      <div class="compare-bars">
+        <div class="compare-bar-row"><div class="compare-bar-label">Strength</div><div class="compare-bar-track"><div class="compare-bar-fill bar-str" style="--w:94%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Speed</div><div class="compare-bar-track"><div class="compare-bar-fill bar-spd" style="--w:96%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Haki</div><div class="compare-bar-track"><div class="compare-bar-fill bar-hki" style="--w:100%"></div></div></div>
+      </div>
+      <div class="compare-rank">S+</div>
+    </div>
+    <div class="compare-row reveal reveal-delay-1">
+      <div class="compare-name">🌑 Blackbeard</div>
+      <div class="compare-bars">
+        <div class="compare-bar-row"><div class="compare-bar-label">Strength</div><div class="compare-bar-track"><div class="compare-bar-fill bar-str" style="--w:96%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Speed</div><div class="compare-bar-track"><div class="compare-bar-fill bar-spd" style="--w:78%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Haki</div><div class="compare-bar-track"><div class="compare-bar-fill bar-hki" style="--w:90%"></div></div></div>
+      </div>
+      <div class="compare-rank" style="color:var(--crimson)">S</div>
+    </div>
+    <div class="compare-row reveal reveal-delay-2">
+      <div class="compare-name">🌊 Jinbe</div>
+      <div class="compare-bars">
+        <div class="compare-bar-row"><div class="compare-bar-label">Strength</div><div class="compare-bar-track"><div class="compare-bar-fill bar-str" style="--w:82%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Speed</div><div class="compare-bar-track"><div class="compare-bar-fill bar-spd" style="--w:78%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Haki</div><div class="compare-bar-track"><div class="compare-bar-fill bar-hki" style="--w:80%"></div></div></div>
+      </div>
+      <div class="compare-rank">A+</div>
+    </div>
+    <div class="compare-row reveal reveal-delay-3">
+      <div class="compare-name">🗡️ Mihawk</div>
+      <div class="compare-bars">
+        <div class="compare-bar-row"><div class="compare-bar-label">Strength</div><div class="compare-bar-track"><div class="compare-bar-fill bar-str" style="--w:90%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Speed</div><div class="compare-bar-track"><div class="compare-bar-fill bar-spd" style="--w:92%"></div></div></div>
+        <div class="compare-bar-row"><div class="compare-bar-label">Haki</div><div class="compare-bar-track"><div class="compare-bar-fill bar-hki" style="--w:95%"></div></div></div>
+      </div>
+      <div class="compare-rank">S</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">☠ ONE PIECE</div>
+  <p class="footer-quote">"Inherited Will, the Tide of the Ages, the Dreams of People — these are things that cannot be stopped. As long as people seek the answer to freedom, these will never cease to be."</p>
+  <p style="font-family:'Cinzel',serif;font-size:0.75rem;color:rgba(255,215,0,0.3);letter-spacing:0.3em;margin-bottom:20px">— GOLD ROGER</p>
+  <p class="footer-copy">Fan Tribute · One Piece © Eiichiro Oda / Shueisha</p>
+</footer>
+
+<script>
+// ──── STARS ────
+const starsContainer = document.getElementById('starsContainer');
+for(let i = 0; i < 120; i++) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  star.style.cssText = `
+    left:${Math.random()*100}%;
+    top:${Math.random()*100}%;
+    animation-delay:${Math.random()*3}s;
+    animation-duration:${2+Math.random()*3}s;
+    width:${Math.random()>0.8?3:2}px;
+    height:${Math.random()>0.8?3:2}px;
+    opacity:${0.2+Math.random()*0.5};
+  `;
+  starsContainer.appendChild(star);
+}
+
+// ──── SCROLL REVEAL ────
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      // Trigger bar animations when visible
+      entry.target.querySelectorAll('.compare-bar-fill, .haki-fill').forEach(bar => {
+        bar.style.width = bar.style.getPropertyValue('--w') || getComputedStyle(bar).getPropertyValue('--w');
+      });
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => observer.observe(el));
+
+// ──── FILTER ────
+function filterCards(tag, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#crewGrid .char-card').forEach(card => {
+    if(tag === 'all') { card.style.display = ''; return; }
+    const tags = card.dataset.tags || '';
+    card.style.display = tags.includes(tag) ? '' : 'none';
+  });
+}
+
+// ──── PARALLAX ────
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  document.querySelectorAll('.parallax-text').forEach(el => {
+    el.style.transform = `translateX(${-scrollY * 0.05 % 50}%)`;
+  });
+});
+
+// ──── COMPARE BAR TRIGGER ────
+const compareObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      entry.target.querySelectorAll('.compare-bar-fill').forEach(bar => {
+        const w = bar.style.cssText.match(/--w:([^;]+)/);
+        if(w) bar.style.width = w[1];
+      });
+    }
+  });
+}, {threshold: 0.3});
+document.querySelectorAll('.compare-row').forEach(row => compareObserver.observe(row));
+</script>
+</body>
+</html>
